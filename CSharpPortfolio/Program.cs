@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
@@ -27,6 +28,7 @@ namespace CSharpPortfolio
                 Console.WriteLine("2 - Kalkulator emerytalny - z pliku csv");
                 Console.WriteLine("3 - Objętość stożka");
                 Console.WriteLine("4 - Równanie kwadratowe");
+                Console.WriteLine("5 - Parametry trójkąta");
                 Console.WriteLine(border);
                 Console.WriteLine("Twój wybór: ");
 
@@ -40,6 +42,7 @@ namespace CSharpPortfolio
                     case "2": RetirementCalculatorCSV("users.csv"); Thread.Sleep(3000); break;
                     case "3": ConeVolume(); Thread.Sleep(3000); break;
                     case "4": Quadratic(); Thread.Sleep(3000); break;
+                    case "5": TriangleParameters(); Thread.Sleep(3000); break;
                 }
             }
 
@@ -52,6 +55,7 @@ namespace CSharpPortfolio
                 while (!validInput)
                 {
                     Console.WriteLine("Podaj Nazwisko, Aktualny wiek oraz próg emerytalny (oddzielone spacją)");
+
                     var input = Console.ReadLine()?.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
                     if (input == null || input.Length < 3)
@@ -93,11 +97,11 @@ namespace CSharpPortfolio
                     string[] lines = File.ReadAllLines(filePath);
                     Console.WriteLine($"Znaleziono {lines.Length - 1} wpisów do przetworzenia.");
 
-                    for(int i = 1; i < lines.Length; i++)
+                    for (int i = 1; i < lines.Length; i++)
                     {
                         string[] data = lines[i].Split(',');
-                        
-                        if(data.Length < 3)
+
+                        if (data.Length < 3)
                         {
                             Console.WriteLine($"Błąd: Nieprawidłowa ilość danych wejściowych. Pominięto wiersz {i}");
                             continue;
@@ -221,13 +225,13 @@ namespace CSharpPortfolio
 
                     else if (a == 0 && b != 0)
                     {
-                        Console.WriteLine($"Równanie liniowe. Jedno rozwiązanie: x = {Math.Round( ( -c / b ) , 2):F2}");
+                        Console.WriteLine($"Równanie liniowe. Jedno rozwiązanie: x = {Math.Round((-c / b), 2):F2}");
                         continue;
                     }
 
                     double delta = b * b - (4 * a * c);
                     if (delta < 0) Console.WriteLine("Delta ujemna. Brak rozwiązań");
-                    else if(delta == 0)
+                    else if (delta == 0)
                     {
                         Console.WriteLine($"Jedno rozwiązanie: x = {Math.Round((-b / (2 * a)), 2):F2}");
                     }
@@ -238,6 +242,65 @@ namespace CSharpPortfolio
                         double x2 = Math.Round((-b + sqrtDelta) / (2 * a), 2);
                         Console.WriteLine($"Wynik: x1={x1:F2}, x2={x2:F2}");
                     }
+                    validInput = true;
+                }
+            }
+
+            void TriangleParameters()
+            {
+                bool validInput = false;
+                Console.WriteLine(" --- ZADANIE 5: PARAMETRY TRÓJKĄTA --- ");
+
+                while (!validInput)
+                {
+                    Console.WriteLine("Podaj wszystkie 3 boki trójkąta (oddzielone spacją)");
+                    var input = Console.ReadLine()?.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                    CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
+
+                    if (input == null || input.Length < 3)
+                    {
+                        Console.WriteLine("Nieprawidłowa ilość danych wejściowych. Spróbuj ponownie.");
+                        continue;
+                    }
+                    if (!double.TryParse(input[0], out double a) || !double.TryParse(input[1], out double b) || !double.TryParse(input[2], out double c))
+                    {
+                        Console.WriteLine("Nieprawidłowy typ danych. Spróbuj ponownie.");
+                        continue;
+                    }
+                    if (a <= 0 || b <= 0 || c <= 0)
+                    {
+                        Console.WriteLine("Nieprawidłowe dane. Długość boków musi być większa od zera. Spróbuj ponownie.");
+                        continue;
+                    }
+
+                    double max = Math.Max(Math.Max(a, b), c);
+                    if(a + b + c - max <= max)
+                    {
+                        Console.WriteLine("Błąd. Nie da się utworzyć trójkąta. Spróbuj ponownie.");
+                        continue;
+                    }
+                    double perimeter = a + b + c;
+                    double p = perimeter / 2;
+                    double area = Math.Sqrt(p * (p - a) * (p - b) * (p - c));
+                    double sumOfShorterSides = a * a + b * b + c * c - max * max;
+                    string angleType = "";
+
+                    if (sumOfShorterSides > c * c)
+                    {
+                        angleType = "Ostrokątny";
+                    }
+                    else if (sumOfShorterSides == c * c)
+                    {
+                        angleType = "Prostokątny";
+                    }
+                    else angleType = "Rozwartokątny";
+
+                    string triangleType = "";
+                    if (a == b && b == c) triangleType = "Równoboczny";
+                    else if (a == b || b == c || a == c) triangleType = "Równoramienny";
+                    else triangleType = "Różnoboczny";
+
+                    Console.WriteLine($"Typ trójkąta: {triangleType},{angleType}\nObwód: {Math.Round(perimeter,2):F2}\nPole: {Math.Round(area,2):F2}\n");
                     validInput = true;
                 }
             }
