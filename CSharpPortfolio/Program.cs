@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Collections.Generic;
 
 namespace CSharpPortfolio
 {
@@ -29,12 +30,15 @@ namespace CSharpPortfolio
                 Console.WriteLine("3 - Objętość stożka");
                 Console.WriteLine("4 - Równanie kwadratowe");
                 Console.WriteLine("5 - Parametry trójkąta");
+                Console.WriteLine("6 - Wypisywanie liczb");
+                Console.WriteLine("7 - Rabat na loty");
                 Console.WriteLine(border);
                 Console.WriteLine("Twój wybór: ");
 
                 string choice = Console.ReadLine();
                 Console.WriteLine();
 
+                // Wywołanie wybranej aplikacji
                 switch (choice)
                 {
                     case "0": running = false; break;
@@ -43,10 +47,17 @@ namespace CSharpPortfolio
                     case "3": ConeVolume(); Thread.Sleep(3000); break;
                     case "4": Quadratic(); Thread.Sleep(3000); break;
                     case "5": TriangleParameters(); Thread.Sleep(3000); break;
+                    case "6": CountNumbersWithStep(); Thread.Sleep(3000); break;
+                    case "7": FlightDiscountCalc(); Thread.Sleep(10000); break;
                 }
             }
 
-
+            /// <summary>
+            /// ZADANIE 1: Kalkulator emerytalny
+            /// Oblicza czas pozostały (liczony w latach) do osiągnięcia wieku emerytalnego.
+            /// Pobiera od użytkownika jedno wierszowe wejście: Nazwisko, aktualny wiek oraz próg emerytalny.
+            /// Zwraca spersonalizowane powitanie i obsługuje poprawną polską odmianę słów "rok", "lata", "lat".
+            /// </summary>
             void RetirementCalculator()
             {
                 bool validInput = false;
@@ -58,6 +69,7 @@ namespace CSharpPortfolio
 
                     var input = Console.ReadLine()?.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
+                    // walidacja wprowadzonych danych
                     if (input == null || input.Length < 3)
                     {
                         Console.WriteLine("Błąd: Nieprawidłowa ilość danych wejściowych. Spróbuj ponownie.");
@@ -77,6 +89,7 @@ namespace CSharpPortfolio
                         continue;
                     }
 
+                    // logika
                     else
                     {
                         int difference = threshold - age;
@@ -89,6 +102,13 @@ namespace CSharpPortfolio
 
                 }
             }
+
+            /// <summary>
+            /// ZADANIE 2: Kalkulator emerytalny csv
+            /// Oblicza czas pozostały (liczony w latach) do osiągnięcia wieku emerytalnego.
+            /// Pobiera dane z pliku tekstowego users.csv, gdzie każdy wiersz zawiera nazwisko, aktualny wiek oraz próg emerytalny.
+            /// Zwraca spersonalizowane powitanie i obsługuje poprawną polską odmianę słów "rok", "lata", "lat".
+            /// </summary>
             static void RetirementCalculatorCSV(string filePath)
             {
                 Console.WriteLine(" --- ZADANIE 2: KALKULATOR EMERYTALNY CSV --- ");
@@ -101,6 +121,7 @@ namespace CSharpPortfolio
                     {
                         string[] data = lines[i].Split(',');
 
+                        // walidacja wprowadzonych danych
                         if (data.Length < 3)
                         {
                             Console.WriteLine($"Błąd: Nieprawidłowa ilość danych wejściowych. Pominięto wiersz {i}");
@@ -142,6 +163,12 @@ namespace CSharpPortfolio
                 }
             }
 
+            /// <summary>
+            /// ZADANIE 3: Objętość stożka
+            /// Oblicza objętość stożka na podstawie promienia podstawy (radius) i długości tworzącej (slant).
+            /// Zawiera walidację danych wejściowych, sprawdza warunek istnienia stożka (slant > radius) 
+            /// Zwraca wynik w postaci podłogi i sufitu (zaokrąglenia w dół i w górę) z obliczonej objętości.
+            /// </summary>
             void ConeVolume()
             {
                 bool validInput = false;
@@ -152,6 +179,7 @@ namespace CSharpPortfolio
                     Console.WriteLine("Podaj promień podstawy \"r\" oraz tworzącą \"l\" z przedziału [0 - 1 000 000] (oddzielone spacją)");
                     var input = Console.ReadLine()?.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
+                    // walidacja wprowadzonych danych
                     if (input == null || input.Length < 2)
                     {
                         Console.WriteLine("Nieprawidłowa ilość danych wejściowych. Spróbuj ponownie.");
@@ -190,7 +218,12 @@ namespace CSharpPortfolio
                 }
             }
 
-
+            /// <summary>
+            /// ZADANIE 4: Równanie kwadratowe
+            /// Rozwiązuje równanie kwadratowe postaci ax² + bx + c = 0.
+            /// Obsługuje przypadki szczególne: tożsamość, brak rozwiązań, równanie liniowe 
+            /// Poprawnie wylicza pierwiastki (x1, x2) używając delty, z zaokrągleniem do dwóch miejsc po przecinku.
+            /// </summary>
             void Quadratic()
             {
                 bool validInput = false;
@@ -201,6 +234,7 @@ namespace CSharpPortfolio
                     Console.WriteLine("Podaj współczynniki równania kwadratowego [ax² + bx + c] (oddzielone spacją)");
                     var input = Console.ReadLine()?.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
+                    // walidacja wprowadzonych danych
                     if (input == null || input.Length < 3)
                     {
                         Console.WriteLine("Nieprawidłowa ilość danych wejściowych. Spróbuj ponownie.");
@@ -246,6 +280,12 @@ namespace CSharpPortfolio
                 }
             }
 
+            /// <summary>
+            /// ZADANIE 5: Parametry trójkąta
+            /// Analizuje trzy boki podane przez użytkownika, sprawdzając warunek zbudowania trójkąta.
+            /// Wylicza obwód i pole (przy użyciu wzoru Herona). 
+            /// Rozpoznaje typ trójkąta pod względem jego kątów (ostrokątny, prostokątny, rozwartokątny) oraz długości boków (równoboczny, równoramienny).
+            /// </summary>
             void TriangleParameters()
             {
                 bool validInput = false;
@@ -257,6 +297,7 @@ namespace CSharpPortfolio
                     var input = Console.ReadLine()?.Split(' ', StringSplitOptions.RemoveEmptyEntries);
                     CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
 
+                    // walidacja wprowadzonych danych
                     if (input == null || input.Length < 3)
                     {
                         Console.WriteLine("Nieprawidłowa ilość danych wejściowych. Spróbuj ponownie.");
@@ -273,12 +314,15 @@ namespace CSharpPortfolio
                         continue;
                     }
 
+                    // Sprawdzanie nierówności trójkąta
                     double max = Math.Max(Math.Max(a, b), c);
                     if(a + b + c - max <= max)
                     {
                         Console.WriteLine("Błąd. Nie da się utworzyć trójkąta. Spróbuj ponownie.");
                         continue;
                     }
+
+                    // Logika
                     double perimeter = a + b + c;
                     double p = perimeter / 2;
                     double area = Math.Sqrt(p * (p - a) * (p - b) * (p - c));
@@ -304,6 +348,253 @@ namespace CSharpPortfolio
                     validInput = true;
                 }
             }
+
+            /// <summary>
+            /// ZADANIE 6: Wypisywanie liczb
+            /// Generuje ciąg liczbowy na podstawie wartości początkowej, końcowej i skoku.
+            /// Skok automatycznie dostosowuje kierunek (rosnący/malejący).
+            /// Dla ciągów powyżej 10 elementów ukrywa środkowe wartości pod postacią wielokropka ("..."), optymalizując wyświetlanie.
+            /// </summary>
+            void CountNumbersWithStep()
+            {
+                bool validInput = false;
+                Console.WriteLine(" --- ZADANIE 6: WYPISYWANIE LICZB --- ");
+
+                while (!validInput)
+                {
+                    Console.WriteLine("Podaj trzy liczby całkowite stanowiące początek, koniec i skok ciągu [np. 1 20 2]  (oddzielone spacją)");
+                    var input = Console.ReadLine()?.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                    CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
+
+                    // walidacja wprowadzonych danych
+                    if (input == null || input.Length < 3)
+                    {
+                        Console.WriteLine("Nieprawidłowa ilość danych wejściowych. Spróbuj ponownie.");
+                        continue;
+                    }
+                    if (!int.TryParse(input[0], out int start) || !int.TryParse(input[1], out int end) || !int.TryParse(input[2], out int step))
+                    {
+                        Console.WriteLine("Nieprawidłowy typ danych. Spróbuj ponownie.");
+                        continue;
+                    }
+                    if (step <= 0)
+                    {
+                        Console.WriteLine("Nieprawidłowe dane. Skok musi być większy od zera. Spróbuj ponownie");
+                        continue;
+                    }
+
+                    // Sprawdzanie pustych ciągów
+                    int max = Math.Max(start, end);
+                    int min = Math.Min(start, end);
+                    if (start == end || (max - min) == 1 || step > Math.Abs(max))
+                    {
+                        Console.WriteLine("Pusty ciąg");
+                        validInput = true;
+                        break;
+                    }
+
+                    // Logika
+                    int directionalStep = start <= end ? step : -step;
+                    int count = ((max - min - 1) / step) + 1;
+
+                    if(count < 10)
+                    {
+                        for(int i = 0; i < count; i++)
+                        {
+                            Console.Write(start + (directionalStep * i) + (i < count - 1 ? ", " : ""));
+                        }
+                    }
+                    else
+                    {
+                        for(int i = 0; i < 3; i++)
+                        {
+                            Console.Write(start + (directionalStep * i) + ", ");
+                            if(i == 2) Console.Write("... , ");
+                        }
+                        for(int i = count - 3; i < count; i++)
+                        {
+                            Console.Write(start + (directionalStep * i) + (i < count - 1 ? ", " : ""));
+                        }
+                    }
+                    Console.WriteLine();
+                    validInput = true;
+                }
+            }
+
+            /// <summary>
+            /// ZADANIE 7: Kalkulator rabatów lotniczych
+            /// Zaawansowany kalkulator wyliczający zniżkę na bilet, testujący operacje na obiektach DateOnly i flagach boolean.
+            /// Precyzyjnie ustala wiek pasażera na sam dzień wylotu 
+            /// Sprawdza, czy termin zahacza o tzw. wysoki sezon (czyli wakacje, święta czy ferie).
+            /// Wprowadza regułę dyskwalifikującą na lot zagraniczny w sezonie dla osoby powyżej 2 r.ż. (zeruje zniżki).
+            /// Sumowanie rabatów:
+            /// - Niemowlę (<2 lata): +80% (krajowy) lub +70% (zagraniczny). Nie łączy się z innymi.
+            /// - Dziecko (2-16 lat): +10%.
+            /// - Wczesna rezerwacja (wylot za > 5 miesięcy): +10%.
+            /// - Lot zagraniczny poza sezonem: +15%.
+            /// - Dorosły (>= 18 lat) stały klient: +15%.
+            /// * Limity: Maksymalny łączny rabat to 80% dla niemowląt i 30% dla wszystkich pozostałych pasażerów.
+            /// </summary>
+            void FlightDiscountCalc()
+            {
+                Console.WriteLine(" --- ZADANIE 7: RABAT NA LOTY --- ");
+
+                bool validInput = false;
+                DateTime birthDate = DateTime.MinValue;
+
+                // Wprowadzanie daty urodzenia
+                while (!validInput)
+                {
+                    Console.WriteLine("Podaj swoją datę urodzenia w formacie RRRR-MM-DD: ");
+                    var birthdayInput = Console.ReadLine().Trim();
+
+                    // walidacja wprowadzonych danych
+                    if (!DateTime.TryParseExact(birthdayInput, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out birthDate))
+                    {
+                        Console.WriteLine("Nieprawidłowy format daty. Spróbuj ponownie.");
+                        continue;
+                    }
+                    if(birthDate > DateTime.Now)
+                    {
+                        Console.WriteLine("Data urodzenia nie może być z przyszłości. Spróbuj ponownie.");
+                        continue;
+                    }
+                    if(birthDate <= new DateTime(1900, 1, 1))
+                    {
+                        Console.WriteLine("Data urodzenia nie może być wcześniejsza niż 1900-01-01. Spróbuj ponownie.");
+                        continue;
+                    }
+
+                    validInput = true;
+                }
+
+                validInput = false;
+                DateTime flightDate = DateTime.MinValue;
+
+                // Wprowadzanie daty lotu
+                while (!validInput)
+                {
+                    Console.WriteLine("Podaj datę lotu w formacie RRRR-MM-DD: ");
+                    var flightDateInput = Console.ReadLine().Trim();
+
+                    if (!DateTime.TryParseExact(flightDateInput, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out flightDate))
+                    {
+                        Console.WriteLine("Nieprawidłowy format daty. Spróbuj ponownie.");
+                        continue;
+                    }
+                    if (flightDate < DateTime.Today)
+                    {
+                        Console.WriteLine("Data lotu nie może być z przeszłości. Spróbuj ponownie.");
+                        continue;
+                    }
+
+                    validInput = true;
+                }
+
+                // Sprawdzanie czy data lotu jest w wysokim sezonie
+                bool isInHighSeason =
+                    (flightDate.Month == 7 || flightDate.Month == 8) || // sprawdzanie czy miesiąc lotu to lipiec lub sierpień
+                    (flightDate.Month == 12 && flightDate.Day >= 20) || (flightDate.Month == 1 && flightDate.Day <= 10) || // sprawdzanie czy lot jest podczas świąt
+                    (flightDate.Month == 3 && flightDate.Day >= 20) || (flightDate.Month == 4 && flightDate.Day <= 10); // sprawdzanie czyh lot jest podczas ferii
+
+                string seasonText = isInHighSeason ? "Lot w sezonie" : "Lot nie w sezonie";
+
+                // Sprawdzanie czy lot krajowy
+                bool isDomestic = true;
+
+                validInput = false;
+                while (!validInput)
+                {
+                    Console.WriteLine("Czy lot jest krajowy? (T/N) ");
+                    var domesticFlightInput = Console.ReadLine().Trim().ToLower();
+                    if(domesticFlightInput == "t")
+                    {
+                        isDomestic = true;
+                        break;
+                    }
+                    else if (domesticFlightInput == "n")
+                    {
+                        isDomestic = false;
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Nieprawidłowa odpowiedź. Spróbuj ponownie");
+                    }
+                }
+                string domesticText = isDomestic ? "Lot krajowy" : "Lot międzynarodowy";
+
+                // Obliczanie wieku w dniu lotu
+                int age = flightDate.Year - birthDate.Year;
+                if (flightDate.Month < birthDate.Month || (flightDate.Month == birthDate.Month && flightDate.Day < birthDate.Day))
+                {
+                    age--;
+                }
+                Console.WriteLine();
+                bool ofAge = (age >= 18);
+
+                validInput = false;
+
+                // Sprawdzanie czy stały klient
+                bool isARegular = false;
+                string regularText = "";
+                if (ofAge)
+                {
+                    while (!validInput)
+                    {
+                        Console.WriteLine("Czy jesteś stałym klientem? (T/N)");
+                        var regularInput = Console.ReadLine().Trim().ToLower();
+
+                        if (regularInput == "t")
+                        {
+                            isARegular = true;
+                            break;
+                        }
+                        else if (regularInput == "n")
+                        {
+                            isARegular = false;
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Nieprawidłowa odpowiedź. Spróbuj ponownie");
+                        }
+                    }
+                    regularText = isARegular ? "Tak" : "Nie";
+                }
+                else
+                {
+                    regularText = "Nie (zniżka tylko dla pełnoletnich)";
+                }
+
+                // Wyświetlenie zebranych informacji
+                Console.WriteLine("\n=== Do obliczeń przyjęto:");
+                Console.WriteLine($" * Data urodzenia: {birthDate:dd.MM.yyyy}");
+                Console.WriteLine($" * Data lotu: {flightDate.ToString("dddd, d MMMM yyyy", new CultureInfo("pl-PL"))}. {seasonText}");
+                Console.WriteLine($" * {domesticText}");
+                Console.WriteLine($" * Stały klient: {regularText}");
+
+                // Obliczanie rabatu
+                int discount = 0;
+                if (!isDomestic && isInHighSeason && age >= 2) discount = 0;
+                else
+                {
+                    if (age < 2 && isDomestic) discount += 80;
+                    if (age < 2 && !isDomestic) discount += 70;
+                    if (age >= 2 && age <= 16) discount += 10;
+                    if (flightDate >= DateTime.Today.AddMonths(5)) discount += 10;
+                    if (!isDomestic && !isInHighSeason) discount += 15;
+                    if (isARegular) discount += 15;
+                }
+
+                // Nakładanie limitów
+                if (age < 2 && discount > 80) discount = 80;
+                if (age >= 2 && discount > 30) discount = 30;
+
+                Console.WriteLine($"\nPrzysługuje Ci rabat w wysokości: {discount}%");
+                Console.WriteLine($"Data wygenerowania raportu: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+            }   
         }
     }
 }
+
