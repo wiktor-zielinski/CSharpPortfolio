@@ -35,6 +35,7 @@ namespace CSharpPortfolio
                 Console.WriteLine("6 - Wypisywanie liczb");
                 Console.WriteLine("7 - Rabat na loty");
                 Console.WriteLine("8 - Rysowanie wzorków");
+                Console.WriteLine("9 - Gra Saper");
                 Console.WriteLine(border);
                 Console.WriteLine("Twój wybór: ");
                 Console.WriteLine();
@@ -53,6 +54,7 @@ namespace CSharpPortfolio
                     case "6": CountNumbersWithStep(); Thread.Sleep(3000); break;
                     case "7": FlightDiscountCalc(); Thread.Sleep(10000); break;
                     case "8": DrawPatternsMenu(); Thread.Sleep(1000); break;
+                    case "9": PlayMineSweeper(); Thread.Sleep(10000); break;
                 }
             }
 
@@ -599,6 +601,7 @@ namespace CSharpPortfolio
                     Console.WriteLine("2 - Rysowanie litery Z");
                     Console.WriteLine("3 - Rysowanie odwrotnej litery Z");
                     Console.WriteLine("4 - Rysowanie klepsydry");
+                    Console.WriteLine("5 - Rysowanie drzewa");
                     Console.WriteLine("0 - Powrót");
                     Console.WriteLine(border);
                     Console.WriteLine("Twój wybór: ");
@@ -619,6 +622,7 @@ namespace CSharpPortfolio
                         case "2": DrawZPattern(GetPatternSize()); break;
                         case "3": DrawReverseZPattern(GetPatternSize()); break;
                         case "4": DrawHourglassPattern(GetPatternSize()); break;
+                        case "5": DrawTreePattern(GetPatternSize()); break;
                         default: break;
                     }
                 }
@@ -651,7 +655,12 @@ namespace CSharpPortfolio
                     }
                 }
             }
-
+            /// <summary>
+            /// ZADANIE 8: Rysowanie wzorków
+            /// Moduł rysowania figur z użyciem pętli zagnieżdżonych. 
+            /// Dla podanego rozmiaru generuje wybrane wzory z gwiazdek: 
+            /// Litere X, Z, Odwróconą litere Z, Klepsydrę oraz choinkę
+            /// </summary>
             void DrawXPattern(int size)
             {
                 for (int row = 0; row < size; row++)
@@ -722,6 +731,123 @@ namespace CSharpPortfolio
                         else Console.Write(" ");
                     }
                     Console.WriteLine();
+                }
+            }
+
+            void DrawTreePattern(int size)
+            {
+                for (int i = 0; i < size; i++)
+                {
+                    for (int j = 0; j < size - i; j++)
+                    {
+                        Console.Write(" ");
+                    }
+                    for (int k = 0; k < 2 * i + 1; k++)
+                    {
+                        Console.Write("*");
+                    }
+                    Console.WriteLine();
+                }
+
+                for (int l = 0; l < 2; l++)
+                {
+                    for (int m = 0; m < size+(l/3); m++)
+                    {
+                        Console.Write(" ");
+                    }
+                    Console.WriteLine("*");
+                }
+            }
+
+
+            /// <summary>
+            /// ZADANIE 9: Gra Saper (Generator podpowiedzi)
+            /// Analizuje wprowadzony przez użytkownika układ dwuwymiarowej planszy min (tablica 2D).
+            /// Iteruje po każdym polu, zliczając miny w bezpośrednim sąsiedztwie (8 kierunków) 
+            /// i zwraca gotową planszę z wpisanymi cyframi podpowiedzi.
+            /// </summary>
+            void PlayMineSweeper()
+            {
+                while (true)
+                {
+                    Console.WriteLine("Podaj ilość wierszy oraz ilość kolumn planszy sapera np. [4 5] (oddzielone spacją)");
+                    var input = Console.ReadLine()?.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+                    // walidacja wprowadzonych danych
+                    if (input == null || input.Length < 2)
+                    {
+                        Console.WriteLine("Nieprawidłowa ilość danych wejściowych. Spróbuj ponownie.");
+                        continue;
+                    }
+                    if (!int.TryParse(input[0], out int row) || !int.TryParse(input[1], out int col))
+                    {
+                        Console.WriteLine("Nieprawidłowy typ danych. Spróbuj ponownie.");
+                        continue;
+                    }
+                    if (row <= 0 || col <= 0)
+                    {
+                        Console.WriteLine("Nieprawidłowe dane. wymiary muszą być większe od zera. Spróbuj ponownie");
+                        continue;
+                    }
+
+                    char[,] board = new char[row, col];
+
+                    Console.WriteLine("Narysuj planszę wiersz po wierszu (kropka '.' to puste pole, gwiazdka '*' to mina):");
+
+                    for(int i = 0; i < row; i++)
+                    {
+                        char[] filledRow = Console.ReadLine().ToCharArray();
+                        for (int j = 0; j < filledRow.Length; j++)
+                        {
+                            if (j < col) board[i, j] = filledRow[j];
+                        }
+                    }
+
+                    Console.WriteLine("\nWynikowa plansza z podpowiedziami\n");
+                    for(int i = 0; i < row; i++)
+                    {
+                        for(int j = 0; j < col; j++)
+                        {
+                            // Przepisiwanie min z wprowadzonej planszy do końcowej
+                            if (board[i, j] == '*')
+                            {
+                                Console.Write("*");
+                            }
+                            else
+                            {
+                                // Sprawdzanie obszaru 3x3 w okół obecnego pola
+                                int counter = 0;
+                                for(int adjacentX = -1; adjacentX <= 1; adjacentX++) // lewo/prawo
+                                {
+                                    
+                                    for(int adjacentY = -1; adjacentY <= 1; adjacentY++) // góra/dół
+                                    {
+                                        // Pomijanie obecnego (środkowego) pola
+                                        if (adjacentY == 0 && adjacentX == 0) continue;
+
+                                        int rowBeingChecked = i + adjacentX;
+                                        int colBeingChecked = j + adjacentY;
+
+                                        // Sprawdzanie czy sprawdzane pole mieści się w planszy
+                                        bool insideBoard = (rowBeingChecked >= 0 && rowBeingChecked < row) && (colBeingChecked >= 0 && colBeingChecked < col);
+
+                                        // Zliczanie ilość min
+                                        if (insideBoard && board[rowBeingChecked, colBeingChecked] == '*')
+                                        {
+                                            counter++;
+                                        }
+
+                                    }
+                                }
+                                if(counter == 0) Console.Write('.');
+                                else Console.Write(counter);
+                            }
+                        }
+                        Console.WriteLine();
+                    }
+
+                    Console.WriteLine();
+                    break;
                 }
             }
         }
