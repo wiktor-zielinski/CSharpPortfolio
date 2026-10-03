@@ -3,6 +3,8 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading;
 
 namespace CSharpPortfolio
 {
@@ -32,9 +34,10 @@ namespace CSharpPortfolio
                 Console.WriteLine("5 - Parametry trójkąta");
                 Console.WriteLine("6 - Wypisywanie liczb");
                 Console.WriteLine("7 - Rabat na loty");
+                Console.WriteLine("8 - Rysowanie wzorków");
                 Console.WriteLine(border);
                 Console.WriteLine("Twój wybór: ");
-
+                Console.WriteLine();
                 string choice = Console.ReadLine();
                 Console.WriteLine();
 
@@ -49,6 +52,7 @@ namespace CSharpPortfolio
                     case "5": TriangleParameters(); Thread.Sleep(3000); break;
                     case "6": CountNumbersWithStep(); Thread.Sleep(3000); break;
                     case "7": FlightDiscountCalc(); Thread.Sleep(10000); break;
+                    case "8": DrawPatternsMenu(); Thread.Sleep(1000); break;
                 }
             }
 
@@ -60,10 +64,9 @@ namespace CSharpPortfolio
             /// </summary>
             void RetirementCalculator()
             {
-                bool validInput = false;
                 Console.WriteLine(" --- ZADANIE 1: KALKULATOR EMERYTALNY --- ");
 
-                while (!validInput)
+                while (true)
                 {
                     Console.WriteLine("Podaj Nazwisko, Aktualny wiek oraz próg emerytalny (oddzielone spacją)");
 
@@ -97,7 +100,7 @@ namespace CSharpPortfolio
                         int lastTwoDigits = difference % 100;
                         string output = (difference == 1) ? "rok!" : (lastDigit >= 2 && lastDigit <= 4 && (lastTwoDigits < 12 || lastTwoDigits > 14)) ? "lata!" : "lat!";
                         Console.WriteLine($"Do emerytury zostało ci: {difference} {output}");
-                        validInput = true;
+                        break;
                     }
 
                 }
@@ -171,10 +174,9 @@ namespace CSharpPortfolio
             /// </summary>
             void ConeVolume()
             {
-                bool validInput = false;
                 Console.WriteLine(" --- ZADANIE 3: OBJĘTOŚĆ STOŻKA --- ");
 
-                while (!validInput)
+                while (true)
                 {
                     Console.WriteLine("Podaj promień podstawy \"r\" oraz tworzącą \"l\" z przedziału [0 - 1 000 000] (oddzielone spacją)");
                     var input = Console.ReadLine()?.Split(' ', StringSplitOptions.RemoveEmptyEntries);
@@ -214,7 +216,7 @@ namespace CSharpPortfolio
                     Console.WriteLine($"Objętość zaokrąglona w dół: {Math.Floor(volume)}");
                     Console.WriteLine($"Objętość zaokrąglona w górę: {Math.Ceiling(volume)}");
 
-                    validInput = true;
+                    break;
                 }
             }
 
@@ -226,10 +228,9 @@ namespace CSharpPortfolio
             /// </summary>
             void Quadratic()
             {
-                bool validInput = false;
                 Console.WriteLine(" --- ZADANIE 4: RÓWNANIE KWADRATOWE --- ");
 
-                while (!validInput)
+                while (true)
                 {
                     Console.WriteLine("Podaj współczynniki równania kwadratowego [ax² + bx + c] (oddzielone spacją)");
                     var input = Console.ReadLine()?.Split(' ', StringSplitOptions.RemoveEmptyEntries);
@@ -276,7 +277,7 @@ namespace CSharpPortfolio
                         double x2 = Math.Round((-b + sqrtDelta) / (2 * a), 2);
                         Console.WriteLine($"Wynik: x1={x1:F2}, x2={x2:F2}");
                     }
-                    validInput = true;
+                    break;
                 }
             }
 
@@ -288,10 +289,9 @@ namespace CSharpPortfolio
             /// </summary>
             void TriangleParameters()
             {
-                bool validInput = false;
                 Console.WriteLine(" --- ZADANIE 5: PARAMETRY TRÓJKĄTA --- ");
 
-                while (!validInput)
+                while (true)
                 {
                     Console.WriteLine("Podaj wszystkie 3 boki trójkąta (oddzielone spacją)");
                     var input = Console.ReadLine()?.Split(' ', StringSplitOptions.RemoveEmptyEntries);
@@ -316,7 +316,7 @@ namespace CSharpPortfolio
 
                     // Sprawdzanie nierówności trójkąta
                     double max = Math.Max(Math.Max(a, b), c);
-                    if(a + b + c - max <= max)
+                    if (a + b + c - max <= max)
                     {
                         Console.WriteLine("Błąd. Nie da się utworzyć trójkąta. Spróbuj ponownie.");
                         continue;
@@ -344,8 +344,8 @@ namespace CSharpPortfolio
                     else if (a == b || b == c || a == c) triangleType = "Równoramienny";
                     else triangleType = "Różnoboczny";
 
-                    Console.WriteLine($"Typ trójkąta: {triangleType},{angleType}\nObwód: {Math.Round(perimeter,2):F2}\nPole: {Math.Round(area,2):F2}\n");
-                    validInput = true;
+                    Console.WriteLine($"Typ trójkąta: {triangleType},{angleType}\nObwód: {Math.Round(perimeter, 2):F2}\nPole: {Math.Round(area, 2):F2}\n");
+                    break;
                 }
             }
 
@@ -357,10 +357,9 @@ namespace CSharpPortfolio
             /// </summary>
             void CountNumbersWithStep()
             {
-                bool validInput = false;
                 Console.WriteLine(" --- ZADANIE 6: WYPISYWANIE LICZB --- ");
 
-                while (!validInput)
+                while (true)
                 {
                     Console.WriteLine("Podaj trzy liczby całkowite stanowiące początek, koniec i skok ciągu [np. 1 20 2]  (oddzielone spacją)");
                     var input = Console.ReadLine()?.Split(' ', StringSplitOptions.RemoveEmptyEntries);
@@ -389,7 +388,6 @@ namespace CSharpPortfolio
                     if (start == end || (max - min) == 1 || step > Math.Abs(max))
                     {
                         Console.WriteLine("Pusty ciąg");
-                        validInput = true;
                         break;
                     }
 
@@ -397,27 +395,27 @@ namespace CSharpPortfolio
                     int directionalStep = start <= end ? step : -step;
                     int count = ((max - min - 1) / step) + 1;
 
-                    if(count < 10)
+                    if (count < 10)
                     {
-                        for(int i = 0; i < count; i++)
+                        for (int i = 0; i < count; i++)
                         {
                             Console.Write(start + (directionalStep * i) + (i < count - 1 ? ", " : ""));
                         }
                     }
                     else
                     {
-                        for(int i = 0; i < 3; i++)
+                        for (int i = 0; i < 3; i++)
                         {
                             Console.Write(start + (directionalStep * i) + ", ");
-                            if(i == 2) Console.Write("... , ");
+                            if (i == 2) Console.Write("... , ");
                         }
-                        for(int i = count - 3; i < count; i++)
+                        for (int i = count - 3; i < count; i++)
                         {
                             Console.Write(start + (directionalStep * i) + (i < count - 1 ? ", " : ""));
                         }
                     }
                     Console.WriteLine();
-                    validInput = true;
+                    break;
                 }
             }
 
@@ -439,11 +437,10 @@ namespace CSharpPortfolio
             {
                 Console.WriteLine(" --- ZADANIE 7: RABAT NA LOTY --- ");
 
-                bool validInput = false;
                 DateTime birthDate = DateTime.MinValue;
 
                 // Wprowadzanie daty urodzenia
-                while (!validInput)
+                while (true)
                 {
                     Console.WriteLine("Podaj swoją datę urodzenia w formacie RRRR-MM-DD: ");
                     var birthdayInput = Console.ReadLine().Trim();
@@ -454,25 +451,24 @@ namespace CSharpPortfolio
                         Console.WriteLine("Nieprawidłowy format daty. Spróbuj ponownie.");
                         continue;
                     }
-                    if(birthDate > DateTime.Now)
+                    if (birthDate > DateTime.Now)
                     {
                         Console.WriteLine("Data urodzenia nie może być z przyszłości. Spróbuj ponownie.");
                         continue;
                     }
-                    if(birthDate <= new DateTime(1900, 1, 1))
+                    if (birthDate <= new DateTime(1900, 1, 1))
                     {
                         Console.WriteLine("Data urodzenia nie może być wcześniejsza niż 1900-01-01. Spróbuj ponownie.");
                         continue;
                     }
 
-                    validInput = true;
+                    break;
                 }
 
-                validInput = false;
                 DateTime flightDate = DateTime.MinValue;
 
                 // Wprowadzanie daty lotu
-                while (!validInput)
+                while (true)
                 {
                     Console.WriteLine("Podaj datę lotu w formacie RRRR-MM-DD: ");
                     var flightDateInput = Console.ReadLine().Trim();
@@ -488,7 +484,7 @@ namespace CSharpPortfolio
                         continue;
                     }
 
-                    validInput = true;
+                    break;
                 }
 
                 // Sprawdzanie czy data lotu jest w wysokim sezonie
@@ -502,12 +498,11 @@ namespace CSharpPortfolio
                 // Sprawdzanie czy lot krajowy
                 bool isDomestic = true;
 
-                validInput = false;
-                while (!validInput)
+                while (true)
                 {
                     Console.WriteLine("Czy lot jest krajowy? (T/N) ");
                     var domesticFlightInput = Console.ReadLine().Trim().ToLower();
-                    if(domesticFlightInput == "t")
+                    if (domesticFlightInput == "t")
                     {
                         isDomestic = true;
                         break;
@@ -533,14 +528,12 @@ namespace CSharpPortfolio
                 Console.WriteLine();
                 bool ofAge = (age >= 18);
 
-                validInput = false;
-
                 // Sprawdzanie czy stały klient
                 bool isARegular = false;
                 string regularText = "";
                 if (ofAge)
                 {
-                    while (!validInput)
+                    while (true)
                     {
                         Console.WriteLine("Czy jesteś stałym klientem? (T/N)");
                         var regularInput = Console.ReadLine().Trim().ToLower();
@@ -593,8 +586,144 @@ namespace CSharpPortfolio
 
                 Console.WriteLine($"\nPrzysługuje Ci rabat w wysokości: {discount}%");
                 Console.WriteLine($"Data wygenerowania raportu: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
-            }   
+            }
+
+            void DrawPatternsMenu()
+            {
+                while (true)
+                {
+                    string border = new string('-', 40);
+                    Console.WriteLine(" --- ZADANIE 8: RYSOWANIE WZORKÓW --- ");
+                    Console.WriteLine(border);
+                    Console.WriteLine("1 - Rysowanie litery X");
+                    Console.WriteLine("2 - Rysowanie litery Z");
+                    Console.WriteLine("3 - Rysowanie odwrotnej litery Z");
+                    Console.WriteLine("4 - Rysowanie klepsydry");
+                    Console.WriteLine("0 - Powrót");
+                    Console.WriteLine(border);
+                    Console.WriteLine("Twój wybór: ");
+                    Console.WriteLine();
+
+                    string subChoice = Console.ReadLine();
+                    Console.WriteLine();
+
+                    if (subChoice == "0")
+                    {
+                        Console.WriteLine("Powrót\n");
+                        return;
+                    }
+
+                    switch (subChoice)
+                    {
+                        case "1": DrawXPattern(GetPatternSize()); break;
+                        case "2": DrawZPattern(GetPatternSize()); break;
+                        case "3": DrawReverseZPattern(GetPatternSize()); break;
+                        case "4": DrawHourglassPattern(GetPatternSize()); break;
+                        default: break;
+                    }
+                }
+                
+
+                // Pobieranie rozmiaru wybranego wzoru
+                int GetPatternSize()
+                {
+                    while (true)
+                    {
+                        Console.WriteLine("Podaj rozmiar wzoru do narysowania. (3-20)");
+                        var input = Console.ReadLine()?.Trim();
+
+                        if (string.IsNullOrEmpty(input))
+                        {
+                            Console.WriteLine("Puste dane. Spróbuj ponownie.");
+                            continue;
+                        }
+                        if (!int.TryParse(input, out int size))
+                        {
+                            Console.WriteLine("Nieprawidłowy format danych. Spróbuj ponownie.");
+                            continue;
+                        }
+                        if (size < 3 || size > 20)
+                        {
+                            Console.WriteLine("Rozmiar wychodzi poza dozwolony przedział. Spróbuj ponownie");
+                            continue;
+                        }
+                        return size;
+                    }
+                }
+            }
+
+            void DrawXPattern(int size)
+            {
+                for (int row = 0; row < size; row++)
+                {
+                    for (int col = 0; col < size; col++)
+                    {
+                        if (col == row || col == size - row - 1)
+                            Console.Write("*");
+                        else
+                            Console.Write(" ");
+                    }
+                    Console.WriteLine();
+                }
+            }
+
+            void DrawZPattern(int size)
+            {
+                for (int row = 0; row < size; row++)
+                {
+                    for (int col = 0; col < size; col++)
+                    {
+                        if (row == 0 || row == size - 1)
+                        {
+                            Console.Write("*");
+                        }
+                        else if (col == size - row - 1)
+                        {
+                            Console.Write(new string(' ', col) + "*");
+                        }
+                    }
+                    Console.WriteLine();
+                }
+            }
+
+            void DrawReverseZPattern(int size)
+            {
+                for (int row = 0; row < size; row++)
+                {
+                    for (int col = 0; col < size; col++)
+                    {
+                        if (row == 0 || row == size - 1)
+                        {
+                            Console.Write("*");
+                        }
+                        else if (col == row)
+                        {
+                            Console.Write(new string(' ', col) + "*");
+                        }
+                    }
+                    Console.WriteLine();
+                }
+            }
+
+            void DrawHourglassPattern(int size)
+            {
+                for (int row = 0; row < size; row++)
+                {
+                    for (int col = 0; col < size; col++)
+                    {
+                        if (row == 0 || row == size - 1)
+                        {
+                            Console.Write("*");
+                        }
+                        else if (col == row || col == size - row - 1)
+                        {
+                            Console.Write("*");
+                        }
+                        else Console.Write(" ");
+                    }
+                    Console.WriteLine();
+                }
+            }
         }
     }
 }
-
