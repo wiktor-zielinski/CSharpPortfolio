@@ -819,7 +819,6 @@ namespace CSharpPortfolio
                                 int counter = 0;
                                 for(int adjacentX = -1; adjacentX <= 1; adjacentX++) // lewo/prawo
                                 {
-                                    
                                     for(int adjacentY = -1; adjacentY <= 1; adjacentY++) // góra/dół
                                     {
                                         // Pomijanie obecnego (środkowego) pola
