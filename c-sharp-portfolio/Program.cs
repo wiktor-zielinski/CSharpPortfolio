@@ -14,7 +14,6 @@ namespace CSharpPortfolio
         {
             bool running = true;
 
-            // Menu
             while (running)
             {
                 // Title box
@@ -23,6 +22,7 @@ namespace CSharpPortfolio
                 string border = new string('-', boxWidth);
                 int leftPadding = (boxWidth - 2 + title.Length) / 2;
 
+                // Menu
                 Console.WriteLine(border);
                 Console.WriteLine("|" + title.PadLeft(leftPadding).PadRight(boxWidth - 2) + "|");
                 Console.WriteLine(border);
@@ -36,6 +36,7 @@ namespace CSharpPortfolio
                 Console.WriteLine("7 - Rabat na loty");
                 Console.WriteLine("8 - Rysowanie wzorków");
                 Console.WriteLine("9 - Gra Saper");
+                Console.WriteLine("10 - Transpozycja tablicy poszarpanej");
                 Console.WriteLine(border);
                 Console.WriteLine("Twój wybór: ");
                 Console.WriteLine();
@@ -55,26 +56,28 @@ namespace CSharpPortfolio
                     case "7": FlightDiscountCalc(); Thread.Sleep(10000); break;
                     case "8": DrawPatternsMenu(); Thread.Sleep(1000); break;
                     case "9": PlayMineSweeper(); Thread.Sleep(10000); break;
+                    case "10": TransposeJaggedArray(); Thread.Sleep(3000); break;
                 }
             }
 
             /// <summary>
-            /// ZADANIE 1: Kalkulator emerytalny
+            /// PROGRAM 1: Kalkulator emerytalny
             /// Oblicza czas pozostały (liczony w latach) do osiągnięcia wieku emerytalnego.
             /// Pobiera od użytkownika jedno wierszowe wejście: Nazwisko, aktualny wiek oraz próg emerytalny.
             /// Zwraca spersonalizowane powitanie i obsługuje poprawną polską odmianę słów "rok", "lata", "lat".
             /// </summary>
             void RetirementCalculator()
             {
-                Console.WriteLine(" --- ZADANIE 1: KALKULATOR EMERYTALNY --- ");
+                Console.WriteLine(" --- PROGRAM 1: KALKULATOR EMERYTALNY --- ");
 
                 while (true)
                 {
+                    // Wprowadzanie danych
                     Console.WriteLine("Podaj Nazwisko, Aktualny wiek oraz próg emerytalny (oddzielone spacją)");
 
                     var input = Console.ReadLine()?.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-                    // walidacja wprowadzonych danych
+                    // Walidacja
                     if (input == null || input.Length < 3)
                     {
                         Console.WriteLine("Błąd: Nieprawidłowa ilość danych wejściowych. Spróbuj ponownie.");
@@ -109,16 +112,17 @@ namespace CSharpPortfolio
             }
 
             /// <summary>
-            /// ZADANIE 2: Kalkulator emerytalny csv
+            /// PROGRAM 2: Kalkulator emerytalny csv
             /// Oblicza czas pozostały (liczony w latach) do osiągnięcia wieku emerytalnego.
             /// Pobiera dane z pliku tekstowego users.csv, gdzie każdy wiersz zawiera nazwisko, aktualny wiek oraz próg emerytalny.
             /// Zwraca spersonalizowane powitanie i obsługuje poprawną polską odmianę słów "rok", "lata", "lat".
             /// </summary>
             static void RetirementCalculatorCSV(string filePath)
             {
-                Console.WriteLine(" --- ZADANIE 2: KALKULATOR EMERYTALNY CSV --- ");
+                Console.WriteLine(" --- PROGRAM 2: KALKULATOR EMERYTALNY CSV --- ");
                 try
                 {
+                    // Sczytywanie danych z pliku
                     string[] lines = File.ReadAllLines(filePath);
                     Console.WriteLine($"Znaleziono {lines.Length - 1} wpisów do przetworzenia.");
 
@@ -126,7 +130,7 @@ namespace CSharpPortfolio
                     {
                         string[] data = lines[i].Split(',');
 
-                        // walidacja wprowadzonych danych
+                        // Walidacja
                         if (data.Length < 3)
                         {
                             Console.WriteLine($"Błąd: Nieprawidłowa ilość danych wejściowych. Pominięto wiersz {i}");
@@ -169,21 +173,22 @@ namespace CSharpPortfolio
             }
 
             /// <summary>
-            /// ZADANIE 3: Objętość stożka
+            /// PROGRAM 3: Objętość stożka
             /// Oblicza objętość stożka na podstawie promienia podstawy (radius) i długości tworzącej (slant).
             /// Zawiera walidację danych wejściowych, sprawdza warunek istnienia stożka (slant > radius) 
             /// Zwraca wynik w postaci podłogi i sufitu (zaokrąglenia w dół i w górę) z obliczonej objętości.
             /// </summary>
             void ConeVolume()
             {
-                Console.WriteLine(" --- ZADANIE 3: OBJĘTOŚĆ STOŻKA --- ");
+                Console.WriteLine(" --- PROGRAM 3: OBJĘTOŚĆ STOŻKA --- ");
 
                 while (true)
                 {
+                    // Wprowadzanie danych
                     Console.WriteLine("Podaj promień podstawy \"r\" oraz tworzącą \"l\" z przedziału [0 - 1 000 000] (oddzielone spacją)");
                     var input = Console.ReadLine()?.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-                    // walidacja wprowadzonych danych
+                    // Walidacja
                     if (input == null || input.Length < 2)
                     {
                         Console.WriteLine("Nieprawidłowa ilość danych wejściowych. Spróbuj ponownie.");
@@ -223,21 +228,22 @@ namespace CSharpPortfolio
             }
 
             /// <summary>
-            /// ZADANIE 4: Równanie kwadratowe
+            /// PROGRAM 4: Równanie kwadratowe
             /// Rozwiązuje równanie kwadratowe postaci ax² + bx + c = 0.
             /// Obsługuje przypadki szczególne: tożsamość, brak rozwiązań, równanie liniowe 
             /// Poprawnie wylicza pierwiastki (x1, x2) używając delty, z zaokrągleniem do dwóch miejsc po przecinku.
             /// </summary>
             void Quadratic()
             {
-                Console.WriteLine(" --- ZADANIE 4: RÓWNANIE KWADRATOWE --- ");
+                Console.WriteLine(" --- PROGRAM 4: RÓWNANIE KWADRATOWE --- ");
 
                 while (true)
                 {
+                    // Wprowadzanie danych
                     Console.WriteLine("Podaj współczynniki równania kwadratowego [ax² + bx + c] (oddzielone spacją)");
                     var input = Console.ReadLine()?.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-                    // walidacja wprowadzonych danych
+                    // Walidacja
                     if (input == null || input.Length < 3)
                     {
                         Console.WriteLine("Nieprawidłowa ilość danych wejściowych. Spróbuj ponownie.");
@@ -284,22 +290,23 @@ namespace CSharpPortfolio
             }
 
             /// <summary>
-            /// ZADANIE 5: Parametry trójkąta
+            /// PROGRAM 5: Parametry trójkąta
             /// Analizuje trzy boki podane przez użytkownika, sprawdzając warunek zbudowania trójkąta.
             /// Wylicza obwód i pole (przy użyciu wzoru Herona). 
             /// Rozpoznaje typ trójkąta pod względem jego kątów (ostrokątny, prostokątny, rozwartokątny) oraz długości boków (równoboczny, równoramienny).
             /// </summary>
             void TriangleParameters()
             {
-                Console.WriteLine(" --- ZADANIE 5: PARAMETRY TRÓJKĄTA --- ");
+                Console.WriteLine(" --- PROGRAM 5: PARAMETRY TRÓJKĄTA --- ");
 
                 while (true)
                 {
+                    // Wprowadzanie danych
                     Console.WriteLine("Podaj wszystkie 3 boki trójkąta (oddzielone spacją)");
                     var input = Console.ReadLine()?.Split(' ', StringSplitOptions.RemoveEmptyEntries);
                     CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
 
-                    // walidacja wprowadzonych danych
+                    // Walidacja
                     if (input == null || input.Length < 3)
                     {
                         Console.WriteLine("Nieprawidłowa ilość danych wejściowych. Spróbuj ponownie.");
@@ -352,22 +359,23 @@ namespace CSharpPortfolio
             }
 
             /// <summary>
-            /// ZADANIE 6: Wypisywanie liczb
+            /// PROGRAM 6: Wypisywanie liczb
             /// Generuje ciąg liczbowy na podstawie wartości początkowej, końcowej i skoku.
             /// Skok automatycznie dostosowuje kierunek (rosnący/malejący).
             /// Dla ciągów powyżej 10 elementów ukrywa środkowe wartości pod postacią wielokropka ("..."), optymalizując wyświetlanie.
             /// </summary>
             void CountNumbersWithStep()
             {
-                Console.WriteLine(" --- ZADANIE 6: WYPISYWANIE LICZB --- ");
+                Console.WriteLine(" --- PROGRAM 6: WYPISYWANIE LICZB --- ");
 
                 while (true)
                 {
+                    // Wprowadzanie danych
                     Console.WriteLine("Podaj trzy liczby całkowite stanowiące początek, koniec i skok ciągu [np. 1 20 2]  (oddzielone spacją)");
                     var input = Console.ReadLine()?.Split(' ', StringSplitOptions.RemoveEmptyEntries);
                     CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
 
-                    // walidacja wprowadzonych danych
+                    // Walidacja
                     if (input == null || input.Length < 3)
                     {
                         Console.WriteLine("Nieprawidłowa ilość danych wejściowych. Spróbuj ponownie.");
@@ -422,7 +430,7 @@ namespace CSharpPortfolio
             }
 
             /// <summary>
-            /// ZADANIE 7: Kalkulator rabatów lotniczych
+            /// PROGRAM 7: Kalkulator rabatów lotniczych
             /// Zaawansowany kalkulator wyliczający zniżkę na bilet, testujący operacje na obiektach DateOnly i flagach boolean.
             /// Precyzyjnie ustala wiek pasażera na sam dzień wylotu 
             /// Sprawdza, czy termin zahacza o tzw. wysoki sezon (czyli wakacje, święta czy ferie).
@@ -437,7 +445,7 @@ namespace CSharpPortfolio
             /// </summary>
             void FlightDiscountCalc()
             {
-                Console.WriteLine(" --- ZADANIE 7: RABAT NA LOTY --- ");
+                Console.WriteLine(" --- PROGRAM 7: RABAT NA LOTY --- ");
 
                 DateTime birthDate = DateTime.MinValue;
 
@@ -447,7 +455,7 @@ namespace CSharpPortfolio
                     Console.WriteLine("Podaj swoją datę urodzenia w formacie RRRR-MM-DD: ");
                     var birthdayInput = Console.ReadLine().Trim();
 
-                    // walidacja wprowadzonych danych
+                    // Walidacja
                     if (!DateTime.TryParseExact(birthdayInput, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out birthDate))
                     {
                         Console.WriteLine("Nieprawidłowy format daty. Spróbuj ponownie.");
@@ -590,12 +598,20 @@ namespace CSharpPortfolio
                 Console.WriteLine($"Data wygenerowania raportu: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
             }
 
+            /// <summary>
+            /// PROGRAM 8: Rysowanie wzorków
+            /// Moduł rysowania figur z użyciem pętli zagnieżdżonych. 
+            /// Dla podanego rozmiaru generuje wybrane wzory z gwiazdek: 
+            /// Litere X, Z, Odwróconą litere Z, Klepsydrę oraz choinkę
+            /// Posiada menu, z którego można wybrać zachciany wzorek
+            /// </summary>
+            
             void DrawPatternsMenu()
             {
                 while (true)
                 {
                     string border = new string('-', 40);
-                    Console.WriteLine(" --- ZADANIE 8: RYSOWANIE WZORKÓW --- ");
+                    Console.WriteLine(" --- PROGRAM 8: RYSOWANIE WZORKÓW --- ");
                     Console.WriteLine(border);
                     Console.WriteLine("1 - Rysowanie litery X");
                     Console.WriteLine("2 - Rysowanie litery Z");
@@ -636,7 +652,7 @@ namespace CSharpPortfolio
                         Console.WriteLine("Podaj rozmiar wzoru do narysowania. (3-20)");
                         var input = Console.ReadLine()?.Trim();
 
-                        if (string.IsNullOrEmpty(input))
+                        if (input == null)
                         {
                             Console.WriteLine("Puste dane. Spróbuj ponownie.");
                             continue;
@@ -655,12 +671,8 @@ namespace CSharpPortfolio
                     }
                 }
             }
-            /// <summary>
-            /// ZADANIE 8: Rysowanie wzorków
-            /// Moduł rysowania figur z użyciem pętli zagnieżdżonych. 
-            /// Dla podanego rozmiaru generuje wybrane wzory z gwiazdek: 
-            /// Litere X, Z, Odwróconą litere Z, Klepsydrę oraz choinkę
-            /// </summary>
+
+            // Litera "X"
             void DrawXPattern(int size)
             {
                 for (int row = 0; row < size; row++)
@@ -676,6 +688,7 @@ namespace CSharpPortfolio
                 }
             }
 
+            // Litera "Z"
             void DrawZPattern(int size)
             {
                 for (int row = 0; row < size; row++)
@@ -695,6 +708,7 @@ namespace CSharpPortfolio
                 }
             }
 
+            // Odwrócona litera "Z"
             void DrawReverseZPattern(int size)
             {
                 for (int row = 0; row < size; row++)
@@ -714,6 +728,7 @@ namespace CSharpPortfolio
                 }
             }
 
+            // Klepsydra
             void DrawHourglassPattern(int size)
             {
                 for (int row = 0; row < size; row++)
@@ -734,6 +749,7 @@ namespace CSharpPortfolio
                 }
             }
 
+            // Drzewko/choinka
             void DrawTreePattern(int size)
             {
                 for (int i = 0; i < size; i++)
@@ -761,7 +777,7 @@ namespace CSharpPortfolio
 
 
             /// <summary>
-            /// ZADANIE 9: Gra Saper (Generator podpowiedzi)
+            /// PROGRAM 9: Gra Saper (Generator podpowiedzi)
             /// Analizuje wprowadzony przez użytkownika układ dwuwymiarowej planszy min (tablica 2D).
             /// Iteruje po każdym polu, zliczając miny w bezpośrednim sąsiedztwie (8 kierunków) 
             /// i zwraca gotową planszę z wpisanymi cyframi podpowiedzi.
@@ -770,10 +786,11 @@ namespace CSharpPortfolio
             {
                 while (true)
                 {
+                    // Wprowadzanie danych
                     Console.WriteLine("Podaj ilość wierszy oraz ilość kolumn planszy sapera np. [4 5] (oddzielone spacją)");
                     var input = Console.ReadLine()?.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-                    // walidacja wprowadzonych danych
+                    // Walidacja
                     if (input == null || input.Length < 2)
                     {
                         Console.WriteLine("Nieprawidłowa ilość danych wejściowych. Spróbuj ponownie.");
@@ -792,7 +809,7 @@ namespace CSharpPortfolio
 
                     char[,] board = new char[row, col];
 
-                    Console.WriteLine("Narysuj planszę wiersz po wierszu (kropka '.' to puste pole, gwiazdka '*' to mina):");
+                    Console.WriteLine("\nNarysuj planszę wiersz po wierszu (kropka '.' to puste pole, gwiazdka '*' to mina):\nWybrana długość wiersza: " + col);
 
                     for(int i = 0; i < row; i++)
                     {
@@ -802,51 +819,137 @@ namespace CSharpPortfolio
                             if (j < col) board[i, j] = filledRow[j];
                         }
                     }
-
-                    Console.WriteLine("\nWynikowa plansza z podpowiedziami\n");
-                    for(int i = 0; i < row; i++)
+                    Console.WriteLine("\nWynikowa plansza z podpowiedziami:\n");
+                    for (int i = 0; i < row; i++)
                     {
-                        for(int j = 0; j < col; j++)
+                        for (int j = 0; j < row; j++)
                         {
-                            // Przepisiwanie min z wprowadzonej planszy do końcowej
                             if (board[i, j] == '*')
                             {
                                 Console.Write("*");
                             }
                             else
                             {
-                                // Sprawdzanie obszaru 3x3 w okół obecnego pola
                                 int counter = 0;
-                                for(int adjacentX = -1; adjacentX <= 1; adjacentX++) // lewo/prawo
+                                for (int adjacentX = -1; adjacentX <= 1; adjacentX++)
                                 {
-                                    for(int adjacentY = -1; adjacentY <= 1; adjacentY++) // góra/dół
+                                    for (int adjacentY = -1; adjacentY <= 1; adjacentY++)
                                     {
-                                        // Pomijanie obecnego (środkowego) pola
-                                        if (adjacentY == 0 && adjacentX == 0) continue;
+                                        if (adjacentX == 0 && adjacentY == 0)
+                                        {
+                                            continue;
+                                        }
 
                                         int rowBeingChecked = i + adjacentX;
                                         int colBeingChecked = j + adjacentY;
 
-                                        // Sprawdzanie czy sprawdzane pole mieści się w planszy
-                                        bool insideBoard = (rowBeingChecked >= 0 && rowBeingChecked < row) && (colBeingChecked >= 0 && colBeingChecked < col);
+                                        bool insideBoard = (rowBeingChecked >= 0 && rowBeingChecked < row) &&
+                                                           (colBeingChecked >= 0 && colBeingChecked < col);
 
-                                        // Zliczanie ilość min
                                         if (insideBoard && board[rowBeingChecked, colBeingChecked] == '*')
                                         {
                                             counter++;
                                         }
-
                                     }
                                 }
-                                if(counter == 0) Console.Write('.');
+                                if(counter == 0) Console.Write("*");
                                 else Console.Write(counter);
                             }
                         }
                         Console.WriteLine();
                     }
-
                     Console.WriteLine();
                     break;
+                }
+            }
+
+            /// <summary>
+            /// PROGRAM 10: Transpozycja macierzy/tablicy poszarpanej
+            /// Wczytuje tablicę znaków, której wiersze mogą mieć różną długość.
+            /// Dokonuje operacji transpozycji (zamiany wierszy z kolumnami), 
+            /// wstawiając spacje tam, gdzie pierwotny wiersz był zbyt krótki.
+            /// </summary>
+            void TransposeJaggedArray()
+            {
+                Console.WriteLine(" --- PROGRAM 10: TRANSPOZYCJA TABLICY POSZARPANEJ --- ");
+                while (true)
+                {
+                    // Wprowadzanie danych
+                    Console.WriteLine("Podaj ilość wierszy macierzy: [1-10]");
+                    var input = Console.ReadLine()?.Trim();
+
+                    // Walidacja
+                    if (input == null)
+                    {
+                        Console.WriteLine("Nieprawidłowa ilość danych. Spróbuj ponownie.");
+                        continue;
+                    }
+                    if (!int.TryParse(input, out int row))
+                    {
+                        Console.WriteLine("Nieprawidłowy format danych. Spróbuj ponownie.");
+                        continue;
+                    }
+                    if (row == 0 || row > 10)
+                    {
+                        Console.WriteLine("Ilość wierszy wychodzi poza dozwolony przedział. Spróbuj ponownie");
+                        continue;
+                    }
+
+                    char[][] tab = new char[row][];
+
+                    // Pobieranie macierzy od użytkownika
+                    Console.WriteLine($"Proszę podać {row} wierszy wypełnionych dowolnymi danymi. np. [A B C] (oddzielone spacją)");
+                    for (int i = 0; i < row; i++)
+                    {
+                        string[] filledRow = Console.ReadLine()?.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                        if (filledRow == null) continue;
+
+                        // Przypadek gdzie użytkownik wpisał tylko jedną daną
+                        if (row == 1 && filledRow[0].Length == 1)
+                        {
+                            tab[i] = filledRow[0].ToCharArray();
+                        }
+                        else
+                        {
+                            tab[i] = new char[filledRow.Length];
+                            for (int j = 0; j < filledRow.Length; j++)
+                            {
+                                tab[i][j] = filledRow[j][0];
+                            }
+                        }
+                    }
+
+                    // Obliczanie najdłuższego wiersza
+                    int maxLength = 0;
+                    for (int i = 0; i < tab.Length; i++)
+                    {
+                        if (tab[i].Length > maxLength) maxLength = tab[i].Length;
+                    }
+
+                    // Transponowanie tablicy poszarpanej
+                    char[][] transposedTab = new char[maxLength][];
+                    for (int i = 0; i < maxLength; i++)
+                    {
+                        transposedTab[i] = new char[tab.Length];
+                        for (int j = 0; j < tab.Length; j++)
+                        {
+                            if (i < tab[j].Length) transposedTab[i][j] = tab[j][i];
+                            else transposedTab[i][j] = ' ';
+                        }
+                    }
+
+                    // Wypisanie stranponowanej tablicy poszarpanej
+                    Console.WriteLine("\nStransponowana tablica poszarpana:\n");
+                    for (int i = 0; i < transposedTab.Length; i++)
+                    {
+                        for (int j = 0; j < transposedTab[i].Length; j++)
+                        {
+                            Console.Write(transposedTab[i][j] + " ");
+                        }
+
+                        Console.WriteLine();
+                    }
+                    return;
                 }
             }
         }
